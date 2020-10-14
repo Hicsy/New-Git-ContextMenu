@@ -1,0 +1,42 @@
+Windows Registry Editor Version 5.00
+
+; Created by: Chris H
+; Created on: 2020-OCT-14
+; Adds a context-menu option to [RIGHT-CLICK > NEW...]
+; Clone Git Repo from clipboard (otherwise ask)
+; Regex used for clipboard detection: ^https:\/\/.*\.git$
+; Reference: https://docs.microsoft.com/en-us/windows/win32/shell/context
+; Note: The shell command used is exactly MAX LENGTH (260 chars)!
+
+
+; ---------------------
+; Full PowerShell code readable:
+; ---------------------
+; $Clp = Get-Clipboard
+; $Dir = $(Split-Path \"%1\" -Parent)
+; if($Clp -match '^https:\/\/.*\.git$'){
+;     Write-Host \"Cloning from Clipboard\" -F M
+;     git clone $Clp $Dir
+; }
+; Else{
+;     Write-Host \"Enter Repo Address:\" -F C
+;     git clone (Read-Host) $Dir
+; }
+
+
+; App Registration - Menu Display-Name:
+[HKEY_CLASSES_ROOT\GitCloneHere]
+@="Clone Git Repo (no subfolder)"
+
+; App Registration - Menu Icon:
+[HKEY_CLASSES_ROOT\GitCloneHere\DefaultIcon]
+@="C:\\Program Files\\Git\\mingw64\\share\\git\\git-for-windows.ico"
+
+
+; FileType - Registration:
+[HKEY_CLASSES_ROOT\.-gitclonehere]
+@="GitCloneHere"
+
+; FileType - entry for Shell::New :
+[HKEY_CLASSES_ROOT\.-gitclonehere\ShellNew]
+"command"="PowerShell.exe -NoExit -Command \"$Clp=Get-Clipboard;$Dir=$(Split-Path \\\"%1\\\" -Parent);IF($Clp -Match '^https:\\/\\/.*\\.git$'){Write-Host \\\"Cloning from Clipboard\\\" -F M;git clone $Clp $Dir}ELSE{Write-Host \\\"Enter Repo Address:\\\" -F C;git clone (Read-Host) $Dir}\""
