@@ -1,3 +1,4 @@
+![Usage Example](Preview.png)
 # New>Git (ContextMenu) [Windows]
 ## About
 Add a right-click context menu option to quickly clone a Git Repo to this folder [Windows]
@@ -17,9 +18,6 @@ New default menus are a bit clunky, so If you have a Git-Menu already: let me kn
 > If you already have the URL on your clipboard, it will start the clone in 1-click!
 ---
 
-![Usage Example](Preview.png)
-
----
 ## Enhancement Possibilities
 Beyond the scope of this quickie, but maybe next rainy day:
 - Replace default GIT desktop menu with more choices:
